@@ -15,7 +15,15 @@ QC of NGS reads
 
 ### Exercise: Run FastQC to check your data
 
+```shell
+perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc --casava /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz -o ./ --noextract -t 8
+```
+
 ### Exercise: Run Trimmomatic to filter your data
+
+```shell
+java -jar /home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/trimmomatic-0.33.jar PE -threads 8 -phred33 /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R1_001.fastq.gz /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R2_001.fastq.gz Sample_1_R1_paired.fastq.gz Sample_1_R1_unpaired.fastq.gz Sample_1_R2_paired.fastq.gz Sample_1_R2_unpaired.fastq.gz LEADING:5 TRAILING:5 SLIDINGWINDOW:4:20 MINLEN:36 ILLUMINACLIP:/home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/adapters/TruSeq2-PE.fa:2:30:10
+```
 
 Introduction to Variation Calling
 =================================
@@ -51,7 +59,7 @@ samtools mpileup -q30 -Q30 -uf /home/formacion/COMUNES/IAMZ/data/CIHEAM/Referenc
 VCF Filtering
 =============
 
-### Exercise: Select only SNP from a VCF file
+### Exercise: Select only SNPs from a VCF file
 
 ```shell
 java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa --variant Sample_1.ug.vcf -o Sample_1.ug.SNP.vcf -selectType SNP
