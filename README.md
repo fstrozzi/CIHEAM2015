@@ -184,6 +184,7 @@ java -Xmx8G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.j
 
 Command line explanation:
 
+* ```-T``` this specify the tool to use from GATK, in this case UnifiedGenotyper
 * ```-R``` the Fasta file with the reference genome
 * ```-I``` the input BAM file
 * ```-o``` the output VCF file
