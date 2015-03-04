@@ -130,7 +130,7 @@ java -Xmx8G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.j
 ### Exercise: Run Samtools Variation Calling
 
 ```shell
-samtools mpileup -q30 -Q30 -uf /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa Sample_1.chr18.bam | bcftools call -mv > Sample_1.st.vcf
+samtools mpileup -t DV -q30 -Q30 -uf /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa Sample_1.chr18.bam | bcftools call -mv > Sample_1.st.vcf
 ```
 
 VCF Filtering
