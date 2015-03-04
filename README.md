@@ -196,9 +196,30 @@ Command line explanation:
 
 ### Exercise: Run Samtools Variation Calling
 
+We create a folder for Samtools and we move there:
+
 ```shell
-samtools mpileup -t DV -q30 -Q30 -uf /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa Sample_1.chr18.bam | bcftools call -mv > Sample_1.st.vcf
+cd $HOME/variant_calling
+mkdir samtools
+cd samtools
 ```
+
+To run Samtools variation calling we use this command line:
+
+```shell
+samtools mpileup -t DV -q30 -Q30 \
+-u -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa Sample_1.chr18.bam\
+| bcftools call -m -v > Sample_1.st.vcf
+```
+
+Command line explanation:
+* ```-t``` tells Samtools to include also the DV field into the output VCF file
+* ```-u``` means Samtools will emit output as uncompressed. Since we are piping this output to bcftools we do not waste time in compressing and uncompressing again the stream of data
+* ```-f``` this is the Fasta file with the reference genome
+* ```bcftools call -m -v`` bcftools takes the output of samtools and call the variants using 
+    * ```-m``` multiallelic caller (new algorithm)
+    * ```-v``` emits only variants sites
+
 
 VCF Filtering
 =============
