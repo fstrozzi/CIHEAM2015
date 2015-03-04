@@ -34,11 +34,23 @@ Now enter the QC/FastQC directory
 cd QC/FastQC
 ```
 
-And now run the FastQC analysis: 
+And run the FastQC analysis: 
 
 ```shell
-perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc --casava /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz -o ./ --noextract -t 8
+perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz -o ./ --noextract -t 8
 ```
+
+Command line explanation:
+
+* the ```-o``` option specifiy the output folder where FastQC will write the results. In this case it is the current directory, specified with ```./```
+* the ```--noextract``` tells FastQC to not automatically extract the zip files it creates
+* the ```-t 8``` istruct FastQC to use 8 CPUs for this analysis
+
+Now a look at the results:
+
+
+
+
 
 ### Exercise: Run Trimmomatic to filter your data
 
