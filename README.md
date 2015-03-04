@@ -107,9 +107,25 @@ Variation Calling
 
 ### Exercise: Prepare a BAM file only with the reads mapped on chromosome 18
 
+Before running the variation callers we need to subset to prepare a working folder:
+
 ```shell
-samtools view -b Sample_1.md.sort.bam 18 > Sample_1.chr18.bam
+mkdir variation_calling
+cd  variation_calling
 ```
+
+Now we need to prepare a BAM file with only the reads mapped on chromosome 18, to make the variation calling process quicker. This is quite simple and we are using Samtools for that
+
+```shell
+samtools view -b Sample_1.bam 18 > Sample_1.chr18.bam
+```
+
+Command line explanation (quite simple):
+
+* ```-b``` specifies that the input file is a BAM file
+* ```18``` just tell Samtools to print out only the reads on the chromosome 18 region
+
+And of course we need to index this BAM file, for the callers to be able to extract the reads.
 
 ```shell
 samtools index Sample_1.chr18.bam
@@ -117,15 +133,66 @@ samtools index Sample_1.chr18.bam
 
 ### Exercise: Run FreeBayes
 
+To run FreeBayes, we create a folder and we move there:
+
 ```shell
-freebayes -b Sample_1.chr18.bam --no-mnps --min-mapping-quality 30 --min-alternate-count 5 --min-coverage 5 --min-base-quality 30 -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa -v Sample_1.fb.vcf -r 18
+mkdir freebayes
+cd freebayes
 ```
+And now we can run the command
+
+```shell
+freebayes -b Sample_1.chr18.bam --min-mapping-quality 30 --min-alternate-count 5 --min-coverage 5 --min-base-quality 30 -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa -v Sample_1.fb.vcf -r 18
+```
+
+Command line explanation:
+
+* ```-b``` specifies the input BAM file (in case of multiple samples, just repeat ```-b``` for every BAM file)
+* ```--min-mapping-quality 30``` the minimum mapping quality in Phred scale to evaluate a position
+* ```--min-alternate-count 5``` the minimum number of observation supporting an alternative allele to evaluate a position
+* ```--min-coverage 5``` we want at least 5 reads mapped to evaluate a position
+* ```--min-base-quality 30``` the minimum base quality to evaluate a position
+* ```-f``` this is the Fasta file with the reference genome
+* ```-v``` the name of the output VCF file
+* ```-r 18``` just restrict the analysis to chromsome 18 
+
 
 ### Exercise: Run GATK UnifiedGenotyper
 
+We create a folder for GATK analysis and we move there:
+
 ```shell
-java -Xmx8G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T UnifiedGenotyper -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa -I Sample_1.chr18.bam -o Sample_1.ug.vcf --min_base_quality_score 30 -stand_call_conf 30 -stand_emit_conf 30 -L 18 -nt 8 -glm BOTH
+cd $HOME/variant_calling 
+mkdir gatk
+cd gatk
 ```
+
+And we run the command line for GATK UnifiedGenotyper:
+
+```shell
+java -Xmx8G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T UnifiedGenotyper \
+-R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa \
+-I Sample_1.chr18.bam \
+-o Sample_1.ug.vcf \
+--min_base_quality_score 30 \
+-stand_call_conf 30 \
+-stand_emit_conf 30 \
+-L 18 \
+-nt 8 \
+-glm BOTH
+```
+
+Command line explanation:
+
+* ```-R``` the Fasta file with the reference genome
+* ```-I``` the input BAM file
+* ```-o``` the output VCF file
+* ```--min_base_quality_score 30``` minimum base quality to evaluate a position
+* ```-stand_call_conf 30``` minimum quality to call a variant
+* ```-stand_emit_conf 30``` minimum quality to emit (i.e. write in the VCF file) a variant
+* ```-L 18``` just process reads on chromosome 18
+* ```-nt 8``` uses 8 CPUs to speed up the calculations
+* ```-glm BOTH``` Genotype likelihoods model to use. BOTH means call SNPs and InDels
 
 ### Exercise: Run Samtools Variation Calling
 
