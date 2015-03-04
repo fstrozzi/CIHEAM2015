@@ -214,9 +214,9 @@ samtools mpileup -t DV -q30 -Q30 \
 
 Command line explanation:
 * ```-t``` tells Samtools to include also the DV field into the output VCF file
-* ```-u``` means Samtools will emit output as uncompressed. Since we are piping this output to bcftools we do not waste time in compressing and uncompressing again the stream of data
+* ```-u``` means Samtools will emit output as uncompressed. Since we are piping this output to Bcftools we do not waste time in compressing and uncompressing again the stream of data
 * ```-f``` this is the Fasta file with the reference genome
-* ```bcftools call -m -v`` bcftools takes the output of samtools and call the variants using 
+* ```bcftools call -m -v``` Bcftools takes the output of Samtools and call the variants, with options: 
     * ```-m``` multiallelic caller (new algorithm)
     * ```-v``` emits only variants sites
 
