@@ -5,7 +5,7 @@ Code and tutorials for CIHEAM course. QC, Variation calling and filtering sessio
 
 [QC of NGS reads](https://github.com/fstrozzi/CIHEAM2015#qc-of-ngs-reads)
 
-[Variation Calling](https://github.com/fstrozzi/CIHEAM2015#introduction-to-variation-calling)
+[Variation Calling](https://github.com/fstrozzi/CIHEAM2015#variation-calling)
 
 [VCF Filtering](https://github.com/fstrozzi/CIHEAM2015#vcf-filtering)
 
@@ -21,11 +21,10 @@ First of all prepare a directory for the QC practical:
 mkdir QC
 ```
 
-and create two sub-directories, one for FastQC and one for Trimmomatic:
+and create one sub-directory for FastQC:
 
 ```shell
 mkdir -p QC/FastQC
-mkdir -p QC/Trimmomatic
 ```
 
 Now enter the QC/FastQC directory
@@ -48,17 +47,53 @@ Command line explanation:
 
 Now a look at the results:
 
+[R1 reads](http://htmlpreview.github.io/?https://raw.githubusercontent.com/fstrozzi/CIHEAM2015/master/FastQC/lane1_NoIndex_L001_R1_001_fastqc.html)
 
+[R2 reads](http://htmlpreview.github.io/?https://raw.githubusercontent.com/fstrozzi/CIHEAM2015/master/FastQC/lane1_NoIndex_L001_R2_001_fastqc.html)
 
+If you want, you can also download all the FastQC reports just generated and view them locally:
 
+```shell
+scp -P 2222 "formacion09@calendula.fcsc.es:/home/formacion/formacionXX/QC/FastQC/lane*_NoIndex_L001_R*_001_fastqc.html" .
+```
+
+Now a look at some bad examples:
+
+[Low quality reads](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
+
+[Adapter contamination](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/RNA-Seq_fastqc.html#M9)
 
 ### Exercise: Run Trimmomatic to filter your data
 
+Trimmomatic is a powerful tool, which allows you process raw reads and remove low quality bases and adapter sequences.
+
+Before running Trimmomatic, create a directory where it will create the output files and enter it:
+
 ```shell
-java -jar /home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/trimmomatic-0.33.jar PE -threads 8 -phred33 /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R1_001.fastq.gz /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R2_001.fastq.gz Sample_1_R1_paired.fastq.gz Sample_1_R1_unpaired.fastq.gz Sample_1_R2_paired.fastq.gz Sample_1_R2_unpaired.fastq.gz LEADING:5 TRAILING:5 SLIDINGWINDOW:4:20 MINLEN:36 ILLUMINACLIP:/home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/adapters/TruSeq2-PE.fa:2:30:10
+mkdir -p QC/Trimmomatic
+cd QC/Trimmomatic
 ```
 
-Introduction to Variation Calling
+To run Trimmomatic on one Sample, use this command line:
+
+```shell
+java -jar /home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/trimmomatic-0.33.jar PE -threads 8 -phred33 \
+/home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R1_001.fastq.gz \ 
+/home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R2_001.fastq.gz Sample_1_R1_paired.fastq.gz \
+Sample_1_R1_unpaired.fastq.gz Sample_1_R2_paired.fastq.gz Sample_1_R2_unpaired.fastq.gz LEADING:5 TRAILING:5 \ 
+SLIDINGWINDOW:4:20 MINLEN:36 ILLUMINACLIP:/home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/adapters/TruSeq2-PE.fa:2:30:10
+```
+
+When if finish, look at the files generated:
+
+```shell
+$ ls
+Sample_1_R1_paired.fastq.gz  Sample_1_R1_unpaired.fastq.gz  Sample_1_R2_paired.fastq.gz  Sample_1_R2_unpaired.fastq.gz
+```
+
+There are 4 files, two for paired-end reads and two for unpaired reads, i.e. reads that lost their mate due to trimming and filtering.
+
+Variation Calling
 =================================
 
 ### Exercise: Prepare a BAM file only with the reads mapped on chromosome 18
