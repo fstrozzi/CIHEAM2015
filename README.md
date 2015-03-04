@@ -81,10 +81,19 @@ java -jar /home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/trimmomatic-0.33.ja
 /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R1_001.fastq.gz \ 
 /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/lane1_NoIndex_L001_R2_001.fastq.gz Sample_1_R1_paired.fastq.gz \
 Sample_1_R1_unpaired.fastq.gz Sample_1_R2_paired.fastq.gz Sample_1_R2_unpaired.fastq.gz LEADING:5 TRAILING:5 \ 
-SLIDINGWINDOW:4:20 MINLEN:36 ILLUMINACLIP:/home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/adapters/TruSeq2-PE.fa:2:30:10
+SLIDINGWINDOW:4:20 MINLEN:36 \ 
+ILLUMINACLIP:/home/formacion/COMUNES/IAMZ/soft/Trimmomatic-0.33/adapters/TruSeq2-PE.fa:2:30:10
 ```
 
-When if finish, look at the files generated:
+Command line explanations:
+
+* ```-threads 8``` tells Trimmomatic to use 8 CPUs to speed up the analysis
+* ```LEADING:5``` and ```TRAILING:5``` specify to remove bases having a quality score below 5 at the very beginning or end of the read
+* ```SLIDINGWINDOW:4:20``` means Trimmomatic will scan the reads using a window of 4 bases and will trim the window if the average quality is below 20
+* ```MINLEN:36``` discard reads shorter than 36nt after the trimming process
+* ```ILLUMINACLIP``` this line specify which adapter file will be used to search and remove adaperts sequences within the reads
+
+When it completes, look at the files generated:
 
 ```shell
 $ ls
