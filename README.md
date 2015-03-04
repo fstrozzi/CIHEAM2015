@@ -15,6 +15,27 @@ QC of NGS reads
 
 ### Exercise: Run FastQC to check your data
 
+First of all prepare a directory for the QC practical:
+
+```shell
+mkdir QC
+```
+
+and create two sub-directories, one for FastQC and one for Trimmomatic:
+
+```shell
+mkdir -p QC/FastQC
+mkdir -p QC/Trimmomatic
+```
+
+Now enter the QC/FastQC directory
+
+```shell
+cd QC/FastQC
+```
+
+And now run the FastQC analysis: 
+
 ```shell
 perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc --casava /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz -o ./ --noextract -t 8
 ```
