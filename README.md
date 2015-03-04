@@ -162,6 +162,23 @@ tabix -p vcf Sample_1.st.SNP.vcf.gz
 
 ### Exercise: Filter the VCF file according to different parameters
 
+**Simple filters using BCFtools**
+
+```shell
+bcftools filter -i'DP>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf 
+```
+
+```shell
+bcftools filter -i'%QUAL>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf
+```
+
+```shell
+bcftools filter -i'%QUAL>100 && DP>10' ../freebayes/Sample_1.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf
+```
+
+**Variant Quality Score Recalibration using GATK**
+
+
 
 ### Exercise: Run vcf-compare to get statistics on different VCF files
 
