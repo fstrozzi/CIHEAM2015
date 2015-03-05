@@ -36,7 +36,9 @@ cd QC/FastQC
 And run the FastQC analysis: 
 
 ```shell
-perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc /home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz -o ./ --noextract -t 8
+perl /home/formacion/COMUNES/IAMZ/soft/FastQC-0.11.2/fastqc \
+/home/formacion/COMUNES/IAMZ/data/CIHEAM/reads_FORTRIMMING/*.gz \
+-o ./ --noextract -t 8
 ```
 
 Command line explanation:
