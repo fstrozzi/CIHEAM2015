@@ -227,29 +227,53 @@ VCF Filtering
 
 ### Exercise: Select only SNPs from a VCF file
 
+We first create a working directory for the filtering activities:
+
+```shell
+cd $HOME/variant_calling
+mkdir filtering
+```
+
+As a first exercise, we filter the raw VCF files to retain only the SNPs:
+
 ```shell
 java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa --variant Sample_1.ug.vcf -o Sample_1.ug.SNP.vcf -selectType SNP
-
-java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa --variant Sample_1.fb.vcf -o Sample_1.fb.SNP.vcf -selectType SNP
-
-java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa --variant Sample_1.st.vcf -o Sample_1.st.SNP.vcf -selectType SNP
 ```
+
+Command line explanation:
+
+* ```-T``` specifies the GATK tool to use, in this case SelectVariants
+* ```-R``` the Fasta file with the reference genome
+* ```--variant``` is the input VCF file
+* ```-o``` the output VCF file with filtered variants
+* ```-selectType``` specifies the type of variant to be retained, SNP in this case
+
+
+After this exercise is completed, do the same thing for the VCF files generated with FreeBayes and Samtools. Remeber to keep the same convention for file names.
 
 ### Exercise: Compress and index a VCF file
 
+After having filtered the raw VCF files to retain only SNPs, we will proceed with the VCF compression and indexing, which are necessary for the variations filtering steps:
+
+
 ```shell
-bgzip Sample_1.fb.SNP.vcf
 bgzip Sample_1.ug.SNP.vcf
-bgzip Sample_1.st.SNP.vcf
 ```
 
 ```shell
-tabix -p vcf Sample_1.fb.SNP.vcf.gz
 tabix -p vcf Sample_1.ug.SNP.vcf.gz
-tabix -p vcf Sample_1.st.SNP.vcf.gz
 ```
+
+These command lines are quite simple:
+
+* ```bgzip``` is a compression tool designed specifically for VCF files and other common file formats (e.g. GFF)
+* ```tabix``` is an indexing tool that process a bgzip compressed file. The only option needed here is the ```-p``` which specifies the file format, VCF in this case
+
+After this exercise is completed, do the same thing for the VCF files generated with FreeBayes and Samtools. Remeber to keep the same convention for file names.
 
 ### Exercise: Filter the VCF file according to different parameters
+
+Now the real filtering. To do this we are going to use the Bcftools software and we experiment with different combinations
 
 **Simple filters using BCFtools**
 
