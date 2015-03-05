@@ -237,7 +237,11 @@ mkdir filtering
 As a first exercise, we filter the raw VCF files to retain only the SNPs:
 
 ```shell
-java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa --variant Sample_1.ug.vcf -o Sample_1.ug.SNP.vcf -selectType SNP
+java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants \
+-R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa \
+--variant Sample_1.ug.vcf \
+-o Sample_1.ug.SNP.vcf \
+-selectType SNP
 ```
 
 Command line explanation:
@@ -273,37 +277,114 @@ After this exercise is completed, do the same thing for the VCF files generated 
 
 ### Exercise: Filter the VCF file according to different parameters
 
-Now the real filtering. To do this we are going to use the Bcftools software and we experiment with different combinations
+Now the real filtering. To do this we are going to use the Bcftools software and we experiment with different filters combinations:
 
 **Simple filters using BCFtools**
 
 ```shell
-bcftools filter -i'DP>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf 
+bcftools filter -i'DP>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf 
 ```
 
 ```shell
-bcftools filter -i'%QUAL>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf
+bcftools filter -i'%QUAL>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
 ```
 
 ```shell
-bcftools filter -i'%QUAL>100 && DP>10' ../freebayes/Sample_1.SNP.vcf.gz > ../freebayes/Sample_1.fb.SNP.filtered.vcf
+bcftools filter -i'%QUAL>100 && DP>10' ../freebayes/Sample_1.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
 ```
 
-**Variant Quality Score Recalibration using GATK**
+In this case we are filtering using the quality and depth of coverage parameters:
 
+After each fileter, use this command line to assess the number of remaing SNPs:
 
+```shell
+grep -c -v "#" Sample_1.fb.SNP.filtered.vcf
+```
+
+A more detailed information can also be generated using another utility from Bcftools
+
+```shell
+bcftools stats Sample_1.fb.SNP.filtered.vcf
+```
+
+This is a long report on various metrics, including the number of nucleotide transitions and transversions, the quality and coverage distributions etc.
+
+Try to experiment for a while using ```bcftools filter``` also with the other VCF files from GATK and Samtools. Perform some filtering using also specifics parameters for each caller, e.g the DV field for Samtools or the QD field for GATK.
+
+At the end of this part, you need to have one filtered VCF file for each caller.
 
 ### Exercise: Run vcf-compare to get statistics on different VCF files
 
+Now we perform a comparison of the SNPs that are in common between the 3 filtered datasets generated with FreeBayes, GATK and Samtools:
+
 ```shell
-vcf-compare Sample_1.st.SNP.vcf.gz Sample_1.ug.SNP.vcf.gz Sample_1.fb.SNP.vcf.gz | grep "^VN" | cut -f 2-
+vcf-compare Sample_1.st.SNP.filtered.vcf Sample_1.ug.SNP.filtered.vcf Sample_1.fb.SNP.filtered.vcf | grep "^VN" | cut -f 2-
 ```
+
+Command line explanation:
+
+* ```vcf-compare``` just takes one or more VCF file and output information on the comparison
+* ```| grep "^VN" | cut -f 2-``` these commands are just used to extract the information suitable to generate a Venn diagram
 
 ### Exercise: Plot the results of vcf-compare using R
 
+**This part is done locally on your PC and NOT on the cluster**
+
+Open a terminal and run R:
+
+```shell
+$ R
+
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.1.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+>
+```
+
+From now on all the commmands will be issued on the R shell
+
+First, install the ```venneuler``` package:
+
+```R
+install.packages("venneuler")
+```
+if you are promped with the selection of a location where to download the package, just select "Spain" and confirm.
+
+Then we create and plot a Venn Diagram:
+
 ```R
 library(venneuler)
-v = venneuler(c(FB=66,"FB&HC"=181,"FB&UG"=1799,HC=2727,UG=8330,"HC&UG"=47455,"FB&HC&UG"=125625)
-plot(v)
+v = venneuler(c(FB=66,"FB&ST"=181,"FB&UG"=1799,ST=2727,UG=8330,"ST&UG"=47455,"FB&ST&UG"=125625))
 ```
+
+This is just an exmaple to explain how to pass information to this package. You need to take the numbers generated from the your ```vcf-compare``` analysis. For simplicity just use short codes for each caller:
+
+* FB: FreeBayes
+* UG: GATK UnifiedGenotyper
+* ST: Samtools
+
+At the end you should get an image like this:
+
+!(http://i.imgur.com/gQznCm1.jpg)
+
+
+
+
+
+
 
