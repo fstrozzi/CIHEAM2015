@@ -380,7 +380,7 @@ This is just an exmaple to explain how to pass information to this package. You 
 
 At the end you should get an image like this:
 
-!(http://i.imgur.com/gQznCm1.jpg)
+![alt text](http://i.imgur.com/gQznCm1.jpg "Venn Diagram of variation calls")
 
 
 
