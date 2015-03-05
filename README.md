@@ -372,15 +372,18 @@ Then we create and plot a Venn Diagram:
 ```R
 library(venneuler)
 v = venneuler(c(FB=66,"FB&ST"=181,"FB&UG"=1799,ST=2727,UG=8330,"ST&UG"=47455,"FB&ST&UG"=125625))
+plot(v)
 ```
 
-This is just an exmaple to explain how to pass information to this package. You need to take the numbers generated from the your ```vcf-compare``` analysis. For simplicity just use short codes for each caller:
+This is just an exmaple to show how to pass data to this package. For a good practice, you need to take the numbers generated from your ```vcf-compare``` analysis. For simplicity just use short codes for each caller:
 
 * FB: FreeBayes
 * UG: GATK UnifiedGenotyper
 * ST: Samtools
 
-At the end you should get an image like this:
+As you can see from the example, the union of different callers results is defined using an ```&```.
+
+At the end of this exercise you should get a Venn diagram similar to this one:
 
 ![alt text](http://i.imgur.com/gQznCm1.jpg "Venn Diagram of variation calls")
 
