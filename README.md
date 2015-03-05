@@ -119,7 +119,7 @@ cd  variation_calling
 Now we need to prepare a BAM file with only the reads mapped on chromosome 18, to make the variation calling process quicker. This is quite simple and we are using Samtools for that
 
 ```shell
-samtools view -b Sample_1.bam 18 > Sample_1.chr18.bam
+samtools view -b /home/formacion/COMUNES/IAMZ/data/CIHEAM/bam_variation_calling/Sample_1.final.bam > Sample_1.chr18.bam
 ```
 
 Command line explanation (quite simple):
