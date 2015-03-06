@@ -210,12 +210,13 @@ cd samtools
 To run Samtools variation calling we use this command line:
 
 ```shell
-samtools mpileup -t DV -q30 -Q30 \
+samtools mpileup -r 18 -t DV -q30 -Q30 \
 -u -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa ../Sample_1.chr18.bam \
 | bcftools call -m -v > Sample_1.st.vcf
 ```
 
 Command line explanation:
+* ```-r``` performs the variation calling only on chromosome 18
 * ```-t``` tells Samtools to include also the DV field into the output VCF file
 * ```-u``` means Samtools will emit output as uncompressed. Since we are piping this output to Bcftools we do not waste time in compressing and uncompressing again the stream of data
 * ```-f``` this is the Fasta file with the reference genome
