@@ -241,7 +241,7 @@ As a first exercise, we filter the raw VCF files to retain only the SNPs:
 ```shell
 java -Xmx4G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T SelectVariants \
 -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa \
---variant Sample_1.ug.vcf \
+--variant ../gatk/Sample_1.ug.vcf \
 -o Sample_1.ug.SNP.vcf \
 -selectType SNP
 ```
