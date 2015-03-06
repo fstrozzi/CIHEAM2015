@@ -56,7 +56,7 @@ Now a look at the results:
 If you want, you can also download all the FastQC reports just generated and view them locally:
 
 ```shell
-scp -P 2222 "formacion09@calendula.fcsc.es:/home/formacion/formacionXX/QC/FastQC/lane*_NoIndex_L001_R*_001_fastqc.html" .
+scp -P 2222 "formacionXX@calendula.fcsc.es:/home/formacion/formacionXX/QC/FastQC/lane*_NoIndex_L001_R*_001_fastqc.html" .
 ```
 
 Now a look at some bad examples:
