@@ -119,7 +119,7 @@ cd  variation_calling
 Now we need to prepare a BAM file with only the reads mapped on chromosome 18, to make the variation calling process quicker. This is quite simple and we are using Samtools for that
 
 ```shell
-samtools view -b /home/formacion/COMUNES/IAMZ/data/CIHEAM/bam_variation_calling/Sample_1.final.bam > Sample_1.chr18.bam
+samtools view -b /home/formacion/COMUNES/IAMZ/data/CIHEAM/bam_variation_calling/Sample_1.final.bam 18 > Sample_1.chr18.bam
 ```
 
 Command line explanation (quite simple):
@@ -144,7 +144,7 @@ cd freebayes
 And now we can run the command
 
 ```shell
-freebayes -b Sample_1.chr18.bam --min-mapping-quality 30 --min-alternate-count 5 --min-coverage 5 --min-base-quality 30 -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa -v Sample_1.fb.vcf -r 18
+freebayes -b ../Sample_1.chr18.bam --min-mapping-quality 30 --min-alternate-count 5 --min-coverage 5 --min-base-quality 30 -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa -v Sample_1.fb.vcf -r 18
 ```
 
 Command line explanation:
@@ -174,7 +174,7 @@ And we run the command line for GATK UnifiedGenotyper:
 ```shell
 java -Xmx8G -jar /home/formacion/COMUNES/IAMZ/soft/GATK-3.3.0/GenomeAnalysisTK.jar -T UnifiedGenotyper \
 -R /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa \
--I Sample_1.chr18.bam \
+-I ../Sample_1.chr18.bam \
 -o Sample_1.ug.vcf \
 --min_base_quality_score 30 \
 -stand_call_conf 30 \
@@ -211,7 +211,7 @@ To run Samtools variation calling we use this command line:
 
 ```shell
 samtools mpileup -t DV -q30 -Q30 \
--u -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa Sample_1.chr18.bam\
+-u -f /home/formacion/COMUNES/IAMZ/data/CIHEAM/ReferenceGenome/bt_umd31/Bos_taurus.UMD3.1.fa ../Sample_1.chr18.bam \
 | bcftools call -m -v > Sample_1.st.vcf
 ```
 
