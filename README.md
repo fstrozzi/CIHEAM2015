@@ -314,13 +314,13 @@ In this case we are filtering using the quality and depth of coverage parameters
 After each fileter, use this command line to assess the number of remaing SNPs:
 
 ```shell
-zgrep -c -v "#" Sample_1.fb.SNP.filtered.vcf.gz
+grep -c -v "#" Sample_1.fb.SNP.filtered.vcf
 ```
 
 A more detailed information can also be generated using another utility from Bcftools
 
 ```shell
-bcftools stats Sample_1.fb.SNP.filtered.vcf.gz
+bcftools stats Sample_1.fb.SNP.filtered.vcf
 ```
 
 This is a long report on various metrics, including the number of nucleotide transitions and transversions, the quality and coverage distributions etc.
