@@ -228,7 +228,7 @@ Command line explanation:
 VCF Filtering
 =============
 
-You had trouble generating the VCF files in the previous steps, you can find them in:
+If you had trouble generating the VCF files in the previous steps, you can find them in:
 
 ```shell
 /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/
