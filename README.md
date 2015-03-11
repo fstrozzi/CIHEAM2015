@@ -247,6 +247,7 @@ We first create a working directory for the filtering activities:
 
 ```shell
 mkdir filtering
+cd filtering
 ```
 
 As a first exercise, we filter the raw VCF files to retain only the SNPs:
