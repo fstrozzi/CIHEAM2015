@@ -331,10 +331,25 @@ At the end of this part, you need to have one filtered VCF file for each caller.
 
 ### Exercise: Run vcf-compare to get statistics on different VCF files
 
-Now we perform a comparison of the SNPs that are in common between the 3 filtered datasets generated with FreeBayes, GATK and Samtools:
+Now we perform a comparison of the SNPs that are in common between the 3 filtered datasets generated with FreeBayes, GATK and Samtools.
+
+First compress and index the filtered VCF files:
 
 ```shell
-vcf-compare Sample_1.st.SNP.filtered.vcf Sample_1.ug.SNP.filtered.vcf Sample_1.fb.SNP.filtered.vcf | grep "^VN" | cut -f 2-
+bgzip Sample_1.st.SNP.filtered.vcf
+tabix -p vcf Sample_1.st.SNP.filtered.vcf.gz
+
+bgzip Sample_1.ug.SNP.filtered.vcf
+tabix -p vcf Sample_1.ug.SNP.filtered.vcf.gz
+
+bgzip Sample_1.fb.SNP.filtered.vcf
+tabix -p vcf Sample_1.fb.SNP.filtered.vcf.gz
+```
+
+Then run the ```vcf-compare``` tool:
+
+```shell
+vcf-compare Sample_1.st.SNP.filtered.vcf.gz Sample_1.ug.SNP.filtered.vcf.gz Sample_1.fb.SNP.filtered.vcf.gz | grep "^VN" | cut -f 2-
 ```
 
 Command line explanation:
