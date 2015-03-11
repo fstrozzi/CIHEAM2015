@@ -164,7 +164,7 @@ Command line explanation:
 We create a folder for GATK analysis and we move there:
 
 ```shell
-cd $HOME/variant_calling 
+cd ../ 
 mkdir gatk
 cd gatk
 ```
@@ -202,7 +202,7 @@ Command line explanation:
 We create a folder for Samtools and we move there:
 
 ```shell
-cd $HOME/variant_calling
+cd ../
 mkdir samtools
 cd samtools
 ```
@@ -235,10 +235,10 @@ If you had trouble generating the VCF files in the previous steps, you can find 
 ```
 
 ```shell
-cd $HOME
-cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.ug.vcf variation_calling/gatk
-cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.fb.vcf variation_calling/freebayes
-cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.st.vcf variation_calling/samtools
+cd variation_calling
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.ug.vcf gatk/
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.fb.vcf freebayes/
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.st.vcf samtools/
 ```
 
 ### Exercise: Select only SNPs from a VCF file
@@ -246,7 +246,6 @@ cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.
 We first create a working directory for the filtering activities:
 
 ```shell
-cd $HOME/variant_calling
 mkdir filtering
 ```
 
