@@ -234,6 +234,13 @@ If you had trouble generating the VCF files in the previous steps, you can find 
 /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/
 ```
 
+```shell
+cd $HOME
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.ug.vcf variation_calling/gatk
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.fb.vcf variation_calling/freebayes
+cp /home/formacion/COMUNES/IAMZ/data/CIHEAM/sessions/variation_calling/Sample_1.st.vcf variation_calling/samtools
+```
+
 ### Exercise: Select only SNPs from a VCF file
 
 We first create a working directory for the filtering activities:
