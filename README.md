@@ -306,7 +306,7 @@ bcftools filter -i'%QUAL>100' Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.
 ```
 
 ```shell
-bcftools filter -i'%QUAL>100 && DP>10' Sample_1.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
+bcftools filter -i'%QUAL>100 && DP>10' Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
 ```
 
 In this case we are filtering using the quality and depth of coverage parameters:
@@ -314,13 +314,13 @@ In this case we are filtering using the quality and depth of coverage parameters
 After each fileter, use this command line to assess the number of remaing SNPs:
 
 ```shell
-grep -c -v "#" Sample_1.fb.SNP.filtered.vcf
+zgrep -c -v "#" Sample_1.fb.SNP.filtered.vcf.gz
 ```
 
 A more detailed information can also be generated using another utility from Bcftools
 
 ```shell
-bcftools stats Sample_1.fb.SNP.filtered.vcf
+bcftools stats Sample_1.fb.SNP.filtered.vcf.gz
 ```
 
 This is a long report on various metrics, including the number of nucleotide transitions and transversions, the quality and coverage distributions etc.
