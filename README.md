@@ -298,15 +298,15 @@ Now the real filtering. To do this we are going to use the Bcftools software and
 **Simple filters using BCFtools**
 
 ```shell
-bcftools filter -i'DP>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf 
+bcftools filter -i'DP>100' Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf 
 ```
 
 ```shell
-bcftools filter -i'%QUAL>100' ../freebayes/Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
+bcftools filter -i'%QUAL>100' Sample_1.fb.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
 ```
 
 ```shell
-bcftools filter -i'%QUAL>100 && DP>10' ../freebayes/Sample_1.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
+bcftools filter -i'%QUAL>100 && DP>10' Sample_1.SNP.vcf.gz > Sample_1.fb.SNP.filtered.vcf
 ```
 
 In this case we are filtering using the quality and depth of coverage parameters:
